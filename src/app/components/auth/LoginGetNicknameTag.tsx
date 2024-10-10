@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 
 const LoginGetNicknameTag = () => {
   const [formData, setFormData] = useState({
@@ -10,22 +10,24 @@ const LoginGetNicknameTag = () => {
     month: '',
     day: '',
     nickname: '',
-    tag: ''
+    tag: '',
   });
   const [isTagAvailable, setIsTagAvailable] = useState<boolean | null>(null);
   const router = useRouter();
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  
+
   const checkTagAvailability = async () => {
     try {
-      const response = await fetch(`/api/authApis/signup?tag=${formData.tag}`, {
+      const response = await fetch(`/api/signup?tag=${formData.tag}`, {
         method: 'GET',
       });
       const data = await response.json();
+      console.log(data, '태그 중복 여부');
+
       setIsTagAvailable(!data.isDuplicate);
     } catch (error) {
       console.error('태그 중복 확인 중 오류 발생:', error);
@@ -36,11 +38,13 @@ const LoginGetNicknameTag = () => {
     e.preventDefault();
     try {
       const birthDate = `${formData.year}-${formData.month.padStart(2, '0')}-${formData.day.padStart(2, '0')}`;
-      const response = await fetch('/api/authApis/signup', {
+
+      const response = await fetch('/api/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
           nickname: formData.nickname,
           tag: formData.tag,
@@ -50,7 +54,7 @@ const LoginGetNicknameTag = () => {
 
       if (response.ok) {
         console.log('회원가입 성공!');
-        router.push('/login'); // 로그인 페이지로 리다이렉트
+        router.push('/login');
       } else {
         console.error('회원가입 실패');
       }
@@ -63,14 +67,9 @@ const LoginGetNicknameTag = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <div className="flex justify-center items-center">
-          <Image
-            src="/logo_Z.jpg"
-            alt="Logo"
-            width={100}
-            height={100}
-          />
+          <Image src="/logo_Z.jpg" alt="Logo" width={100} height={100} />
         </div>
-        <div className="flex justify-center items-start">          
+        <div className="flex justify-center items-start">
           <h2 className="text-xl font-semibold">회원가입</h2>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -104,7 +103,7 @@ const LoginGetNicknameTag = () => {
             </div>
             <p className="text-xs text-gray-500 mt-1">연, 월, 일을 모두 기입해주세요</p>
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">닉네임</label>
             <input
@@ -117,7 +116,7 @@ const LoginGetNicknameTag = () => {
             />
             <p className="text-xs text-gray-500 mt-1">한글, 영문, 숫자로 구성된 8자 이하 닉네임을 작성해주세요</p>
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">태그</label>
             <div className="relative">
@@ -130,8 +129,8 @@ const LoginGetNicknameTag = () => {
                 onChange={handleChange}
                 className="w-full p-2 pl-6 border rounded"
               />
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={checkTagAvailability}
                 className="absolute inset-y-0 right-0 flex items-center pr-2 text-sm"
               >
@@ -145,7 +144,7 @@ const LoginGetNicknameTag = () => {
             )}
             <p className="text-xs text-gray-500 mt-1">영문, 숫자, '_'로 구성된 4-12자의 태그를 작성해주세요</p>
           </div>
-          
+
           <button
             type="submit"
             className="w-full bg-gray-800 text-white p-3 rounded-md hover:bg-gray-700 transition duration-300"
