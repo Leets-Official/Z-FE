@@ -1,5 +1,11 @@
+import Link from 'next/link';
+
 const MainContainer = () => {
-  return <div className="px-4 py-3 flex bg-green-400 rounded-2xl">메인내용을 포함</div>;
+  return (
+    <Link className="px-4 py-3 flex bg-white rounded-2xl" href={'/login'}>
+      Z를 사용해봐여
+    </Link>
+  );
 };
 
 export default MainContainer;
