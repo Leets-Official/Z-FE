@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const client_id = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID || '';
 const redirect_uri = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI || '';
@@ -12,29 +12,28 @@ const LoginStartForm = () => {
   const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${client_id}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code`;
   const route = useRouter();
   const searchParams = useSearchParams();
-  const code = searchParams.get('code');
-  console.log(code, '가져온 코드');
 
-  if (code) {
-    useEffect(() => {
-      const fetchAccessToken = async () => {
-        console.log('effect');
-        try {
-          const response = await fetch(`/api/redirect?code=${code}`);
-          console.log(response.redirected);
-          console.log(response.url);
+  const [code, setCode] = useState<string | null>();
 
-          if (response.redirected) {
-            const redirectUrl = response.url;
-            route.push(redirectUrl || '/');
-          }
-        } catch (error) {
-          console.error('Failed to fetch access token:', error);
+  useEffect(() => {
+    setCode(searchParams.get('code'));
+    if (!code) return;
+    const fetchAccessToken = async () => {
+      console.log('effect');
+      try {
+        const response = await fetch(`/api/redirect?code=${code}`);
+        if (response.redirected) {
+          const redirectUrl = response.url;
+          route.push(redirectUrl || '/');
+        } else {
+          route.push('/');
         }
-      };
-      fetchAccessToken();
-    }, [code]);
-  }
+      } catch (error) {
+        console.error('Failed to fetch access token:', error);
+      }
+    };
+    fetchAccessToken();
+  }, [code]);
 
   return (
     <div className="flex w-[400px] flex-col items-center justify-center min-h-screen gap-y-[60px]">
