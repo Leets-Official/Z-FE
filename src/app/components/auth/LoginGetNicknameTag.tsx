@@ -51,9 +51,10 @@ const LoginGetNicknameTag = () => {
           birthDate,
         }),
       });
+      const data = await response.json();
+      console.log('client 단에서 응답 : ', data);
 
-      if (response.ok) {
-        console.log('회원가입 성공!');
+      if (response) {
         router.push('/login');
       } else {
         console.error('회원가입 실패');

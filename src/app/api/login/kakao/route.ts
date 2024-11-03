@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
+const SERVER_URL = process.env.NEXT_PUBLIC_SERVER;
 
 export async function GET() {
   try {
-    const response = await fetch('http://localhost:8080/api/auth/kakao', {
+    const response = await fetch(`${SERVER_URL}/api/auth/kakao`, {
       redirect: 'manual',
     });
     if (response.status === 302) {

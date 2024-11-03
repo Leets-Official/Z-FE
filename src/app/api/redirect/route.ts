@@ -25,6 +25,7 @@ export async function GET(request: NextRequest) {
 
     const data = await response.json();
     console.log(data, '3. 응답데이터');
+    console.log(setCookieHeader, '쿠키를 읽어보자');
 
     let redirectUrl = '/';
 
@@ -32,13 +33,13 @@ export async function GET(request: NextRequest) {
       redirectUrl = `/signupForm`;
     }
 
-    console.log(redirectUrl, '5. redirect');
+    console.log(redirectUrl, '4. redirect');
     const redirectResponse = NextResponse.redirect(LOCAL_URL + redirectUrl);
 
     if (setCookieHeader) {
       redirectResponse.headers.set('Set-Cookie', setCookieHeader);
     }
-    console.log(setCookieHeader, '4. 쿠키 헤더 설정');
+    console.log(setCookieHeader, '5. 쿠키 헤더 설정');
 
     return redirectResponse;
   } catch (error) {
