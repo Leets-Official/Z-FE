@@ -36,7 +36,7 @@ const LoginStartForm = () => {
   }, [code]);
 
   return (
-    <div className="flex w-[400px] flex-col items-center justify-center min-h-screen gap-y-[60px]">
+    <div className="flex w-[480px] flex-col items-center justify-center min-h-screen gap-y-[60px] bg-white">
       <Image src="/logo_Z.jpg" alt="Logo" width={240} height={240} />
       <div className="flex flex-col text-4xl items-center font-semibold gap-y-10">
         <h2>Z에서 무슨일이?</h2>

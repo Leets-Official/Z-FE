@@ -65,8 +65,8 @@ const LoginGetNicknameTag = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <div className="flex w-[480px] justify-center items-center min-h-screen bg-white">
+      <div className=" p-8 rounded-lg shadow-md max-w-md">
         <div className="flex justify-center items-center">
           <Image src="/logo_Z.jpg" alt="Logo" width={100} height={100} />
         </div>

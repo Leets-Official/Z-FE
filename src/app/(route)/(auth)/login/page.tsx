@@ -2,7 +2,7 @@ import LoginStartForm from '@/app/components/auth/LoginStartForm';
 
 const loginPage = () => {
   return (
-    <div className="flex w-full h-full justify-center items-center bg-white">
+    <div className="flex w-full h-full justify-center items-center bg-black">
       <LoginStartForm />
     </div>
   );

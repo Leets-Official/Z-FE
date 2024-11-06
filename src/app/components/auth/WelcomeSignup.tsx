@@ -7,7 +7,7 @@ interface WelcomeComponentProps {
 
 const WelcomeSignup: React.FC<WelcomeComponentProps> = ({nickname}) => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-white text-black p-4">
+    <div className="flex flex-col w-[480px] items-center justify-center h-screen bg-white text-black p-4">
       <div className="flex justify-center items-center ">
           <Image
             src="/logo_Z.jpg"
